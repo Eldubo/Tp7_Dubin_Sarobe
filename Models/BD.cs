@@ -1,47 +1,48 @@
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using Dapper;
 
 static class BD{
     private static string connectionString = @"Server=localhost; DataBase=Preguntados;TrustedConnection=True";
 
-    static List<Categorias> ObtenerCategorias(){
+    public static List<Categorias> ObtenerCategorias(){
         using(SqlConnection db = new SqlConnection(connectionString)){
             string sql = "SELECT * FROM Categorias";
             return db.Query<Categorias>(sql).ToList();
         }
     }
 
-    static List<Dificultades> ObtenerDificultades(){
+    public static List<Dificultades> ObtenerDificultades(){
         using(SqlConnection db = new SqlConnection(connectionString)){
             string sql = "SELECT * FROM Dificultades";
             return db.Query<Dificultades>(sql).ToList();
         }
     }
 
-    static List<Preguntas> ObtenerPreguntas(int dificultad, int categoria){ // corregir aca segun consigna
-        if (dificultad == -1)
-        {
-            using(SqlConnection db = new SqlConnection()){
-                string sql = "SELECT * FROM Preguntas GROUP BY Dificultad";
-                return db.Query<Preguntas>(sql, new {categoria}).ToList();
-            }
-            else if (categoria == -1)
-            {
-                using(SqlConnection db = new SqlConnection()){
-                    string sql = "SELECT * FROM Preguntas GROUP BY Categorias";
-                    return db.Query<Preguntas>(sql, new {dificultad}).ToList();
-                }
-        }
+    public static List<Preguntas> ObtenerPreguntas(int dificultad, int categoria){
+        string sql = "";
         using(SqlConnection db = new SqlConnection(connectionString)){
-            string sql = "SELECT * FROM Preguntas WHERE Dificultad = @dificultad AND Categorias = @categoria";
+            if (dificultad == -1 && categoria == -1){
+                 sql = "SELECT * FROM Preguntas";}
+            
+            else if (dificultad == -1){
+                 sql = "SELECT * FROM Preguntas WHERE Categorias = @categoria";
+        }
+        else if (categoria == -1){
+                 sql = "SELECT * FROM Preguntas WHERE Dificultad = @dificultad";
+            }
+            else{
+                 sql = "SELECT * FROM Preguntas WHERE Categorias = @categoria AND Dificultad = @dificultad";
+            }
             return db.Query<Preguntas>(sql, new {dificultad, categoria}).ToList();
         }
+        
     }
 
-    static List<Respuestas> ObtenerRespuestas(int idPregunta){
+    public static List<Respuestas> ObtenerRespuestas(int idPregunta){
         using(SqlConnection db = new SqlConnection(connectionString)){
             string sql = "SELECT * FROM Respuestas WHERE Preguntas = @idPregunta";
             return db.Query<Respuestas>(sql, new {idPregunta}).ToList();
         }
-    }
+    } 
 }
