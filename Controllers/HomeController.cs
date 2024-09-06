@@ -29,8 +29,8 @@ public class HomeController : Controller
         return RedirectToAction("Jugar");
     }
 
-    public IActionResult Jugar(int idpregunta){
-        ViewBag.PreguntaActual = Juego.ObtenerProximaPregunta();
+    public IActionResult Jugar(int idpregunta, int dificultad, int categoria){
+        ViewBag.PreguntaActual = Juego.ObtenerProximaPregunta(dificultad, categoria);
         ViewBag.PosiblesRespuestas = Juego.ObtenerProximasRespuestas(idpregunta);
         return View();
     }

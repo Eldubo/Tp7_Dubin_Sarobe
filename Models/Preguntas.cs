@@ -6,7 +6,7 @@
     public string Enunciado { get; set; }
     public string Foto { get; set; }
     
-    public Preguntas(){ }
+    public Preguntas(){}
     public Preguntas (string enunciado, string foto)
     {
         Enunciado = enunciado;

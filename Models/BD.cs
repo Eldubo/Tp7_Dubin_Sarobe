@@ -45,10 +45,4 @@ static class BD{
             return db.Query<Respuestas>(sql, new {idPregunta}).ToList();
         }
     }
-    public static int ObtenerCorrecto(int idRespuesta){
-        using(SqlConnection db = new SqlConnection(connectionString)){
-            string sql = "SELECT Correcta FROM Respuestas WHERE Respuestas = @idRespuesta";
-            return db.Query<int>(sql, new {idRespuesta}).ToList();
-        }
-    }
 }
