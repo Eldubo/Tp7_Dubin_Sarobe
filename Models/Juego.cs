@@ -43,11 +43,11 @@
     public static List<Respuestas> ObtenerProximasRespuestas(int idPregunta){
         return BD.ObtenerRespuestas(idPregunta);
     }
-    public static bool VerificarRespuesta(int idPregunta){
-        bool correcto = false;
-        string Respuesta = "";
+    public static bool VerificarRespuesta(int idRta){
+        bool Correcta = false;
+        ListaRespuestas[idRta].Correcta;
         ContadorNroPreguntaActual +=1;
-        if(Respuesta = BD.ObtenerRespuestas(idPregunta))
+        if(Correcta)
         {            
             correcto = true;
         }
