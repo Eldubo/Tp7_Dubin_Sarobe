@@ -46,6 +46,7 @@
     public static bool VerificarRespuesta(int idRespuesta){
         int respuesta = 0;
         bool correcta = false;
+        return true;
                 
     }
 }
