@@ -43,14 +43,9 @@
     public static List<Respuestas> ObtenerProximasRespuestas(int idPregunta){
         return BD.ObtenerRespuestas(idPregunta);
     }
-    public static bool VerificarRespuesta(int idRta){
-        bool Correcta = false;
-        ListaRespuestas[idRta].Correcta;
-        ContadorNroPreguntaActual +=1;
-        if(Correcta)
-        {            
-            correcto = true;
-        }
-        return correcto;
+    public static bool VerificarRespuesta(int idRespuesta){
+        int respuesta = 0;
+        bool correcta = false;
+                
     }
 }
