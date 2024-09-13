@@ -3,7 +3,7 @@ using System.Diagnostics.Eventing.Reader;
 using Dapper;
 
 static class BD{
-    private static string connectionString = @"Server=localhost; DataBase=Preguntados;TrustedConnection=True";
+    private static string connectionString = @"Server=localhost; DataBase=Preguntados;Trusted_Connection=True";
 
     public static List<Categorias> ObtenerCategorias(){
         using(SqlConnection db = new SqlConnection(connectionString)){

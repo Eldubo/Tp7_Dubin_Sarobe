@@ -27,10 +27,10 @@
         ListaRespuestas = null;
     }
 
-    static List<Categorias> ObtenerCategorias(){
+    static public List<Categorias> ObtenerCategorias(){
         return BD.ObtenerCategorias();
     }
-    static List<Dificultades> ObtenerDificultad(){
+    static public List<Dificultades> ObtenerDificultad(){
         return BD.ObtenerDificultades();
     }
     public static void CargarPartida(string username, int dificultad, int categoria){
@@ -44,9 +44,22 @@
         return BD.ObtenerRespuestas(idPregunta);
     }
     public static bool VerificarRespuesta(int idRespuesta){
-        int respuesta = 0;
-        bool correcta = false;
-        return true;
-                
+       bool correcto = false;
+
+        foreach (var respuesta in ListaRespuestas)
+        {
+            if (respuesta.IdRespuesta == idRespuesta)
+            {
+                if (respuesta.Correcta)
+                {
+                    PuntajeActual += 10;
+                    CantidadPreguntasCorrectas++;
+                }
+                ContadorNroPreguntaActual++;
+                PreguntaActual=ListaPreguntas[ContadorNroPreguntaActual];
+                correcto = true;
+            }
+        }
+        return correcto;
     }
 }
