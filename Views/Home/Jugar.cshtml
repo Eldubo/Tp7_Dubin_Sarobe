@@ -1,0 +1,12 @@
+<h2 class="La" >¡Hola @ViewBag.Username !</h2>
+<h2 class="La" >El puntaje actual es @ViewBag.PuntajeActual</h2>
+
+<form  method="POST" Action='@Url.Action("VerificarRespuesta", "Home")'>
+@ViewBag.Pregunta.Enunciado
+@foreach(Respuestas item in ViewBag.ListaRespuestas)
+{
+    <input class="Pregunta" type="radio" name="Respuesta" value="@item.IdRespuesta" > @item.Contenido  
+}
+    
+     <input class="enviarConfig" type="submit" value="Respuesta" >
+</form>

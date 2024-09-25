@@ -1,46 +1,14 @@
-@{
-    ViewData["Title"] = "Configurar Juego";
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="~/css/configurarJuego.css"/>
-</head>
-<body>
-    <h1>Configurar Juego</h1>
-    <form method="get" action="@Url.Action("Comenzar", "Index")">
-        <div class="form-group">
-            <label for="dificultad">Dificultad:</label>
-            <select id="dificultad" name="dificultad" required>
-                <option value="-1">Todas</option>
-                <option value="1">Fácil</option>
-                <option value="2">Media</option>
-                <option value="3">Difícil</option>
-            </select>
-        </div>
+<form class="formConfig"  Action='@Url.ActionLink("Comenzar", "Home")'>
+    @foreach (Categorias item in ViewBag.ListaCategorias)
+    {
+        <input class="ncategoria" type="radio" name="categoria" value="@item.IdCategoria" required > @item.Nombre  
+    }
+    @foreach (Dificultades item in ViewBag.ListaDificultades)
+    { 
+        <input class="ndificultad" type="radio" name="dificultad" value="@item.IdDificultad"  required > @item.Nombre
+    }
+        <br>
+    <input class="nameusu" type="text" name="username" placeholder="Nombre de Usuario:" required > 
 
-        <div class="form-group">
-            <label>Categoría:</label>
-            <div>
-                <input type="radio" id="categoria1" name="categoria" value="-1" required checked>
-                <label for="categoria1">Todas</label>
-            </div>
-            <div>
-                <input type="radio" id="categoria2" name="categoria" value="1" required>
-                <label for="categoria2">Categoría 1</label>
-            </div>
-            <div>
-                <input type="radio" id="categoria3" name="categoria" value="2" required>
-                <label for="categoria3">Categoría 2</label>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="username">Nombre de Usuario:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-
-        <button type="submit">Jugar</button>
-    </form>
-</body>
-</html>
+        <input class="enviarConfig" type="submit" value="Jugar" >
+</form>

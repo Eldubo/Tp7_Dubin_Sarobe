@@ -1,65 +1,100 @@
- public class Juego
+namespace PreguntadOrt;
+
+static public class Juego
 {
-    static private string Username {get; set;}
-    static private int PuntajeActual {get; set;}
-    static private int ContadorNroPreguntaActual {get; set;}
-    static private int CantidadPreguntasCorrectas {get; set;}
-    static private Preguntas PreguntaActual {get;set;}
-    static private List<Preguntas> ListaPreguntas = new List<Preguntas>();
-    static private List<Respuestas> ListaRespuestas = new List<Respuestas>();
+    static public string Usuario;
+    static public int PuntajeActual;
+    static private int CantCorrectas;
+    static private int ContadorNroPreguntaActual;
+    static private Preguntas PreguntaActual;
+    static private List<Preguntas> ListaPreguntas;
+    static private List<Respuestas> ListaRespuestas;
 
-    public static void InicializarJuego(){
-        Username = "";
+
+    static private void InicializarJuego(string user)
+    {
+        Usuario = user;
         PuntajeActual = 0;
-        CantidadPreguntasCorrectas = 0;
+        CantCorrectas = 0;
         ContadorNroPreguntaActual = 0;
         PreguntaActual = null;
-        ListaPreguntas = null;
-        ListaRespuestas = null;
-    }
-    public static void InicializarJuego(string username){
-        Username = username;
-        PuntajeActual = 0;
-        CantidadPreguntasCorrectas = 0;
-        ContadorNroPreguntaActual = 0;
-        PreguntaActual = null;
-        ListaPreguntas = null;
+        ListaPreguntas = null; 
         ListaRespuestas = null;
     }
 
-    static public List<Categorias> ObtenerCategorias(){
-        return BD.ObtenerCategorias();
+    static public List<Categorias> ObtenerCategorias()
+    {
+        return(BD.ObtenerCategorias());
     }
-    static public List<Dificultades> ObtenerDificultad(){
-        return BD.ObtenerDificultades();
-    }
-    public static void CargarPartida(string username, int dificultad, int categoria){
-    InicializarJuego(username);
-    ListaPreguntas = BD.ObtenerPreguntas(dificultad, categoria);
-    }
-    public static List<Preguntas> ObtenerProximaPregunta(int dificultad, int categoria){
-        return BD.ObtenerPreguntas(dificultad, categoria);
-    }
-    public static List<Respuestas> ObtenerProximasRespuestas(int idPregunta){
-        return BD.ObtenerRespuestas(idPregunta);
-    }
-    public static bool VerificarRespuesta(int idRespuesta){
-       bool correcto = false;
 
-        foreach (var respuesta in ListaRespuestas)
+    static public List<Dificultades> ObtenerDificultades()
+    {
+        return(BD.ObtenerDificultades());
+    }
+
+    static public void CargarPartida(string username, int dificultad, int categoria)
+    {
+        InicializarJuego(username);
+        ListaPreguntas = BD.ObtenerPreguntas(dificultad, categoria);
+    }
+
+    static public Preguntas ObtenerProximaPregunta()
+    {
+        PreguntaActual = ListaPreguntas[ContadorNroPreguntaActual];
+        return PreguntaActual;
+    }
+
+    static public List<Respuestas> ObtenerProximasRespuestas(int idPregunta)
+    {
+        ListaRespuestas = BD.ObtenerRespuestas(idPregunta);
+        return ListaRespuestas;
+    }
+
+    public static bool VerificarRespuesta (int Idrespuesta)
+    {
+        bool Respuestas = false;
+        foreach (Respuestas rta in ListaRespuestas)
         {
-            if (respuesta.IdRespuesta == idRespuesta)
+            if (rta.IdRespuesta == Idrespuesta)
             {
-                if (respuesta.Correcta)
-                {
-                    PuntajeActual += 10;
-                    CantidadPreguntasCorrectas++;
-                }
-                ContadorNroPreguntaActual++;
-                PreguntaActual=ListaPreguntas[ContadorNroPreguntaActual];
-                correcto = true;
+                Respuestas = true;
+
+                    if(PreguntaActual.IdDificultad == 1)
+                    {
+                        PuntajeActual+=150;
+                    }
+                    else if(PreguntaActual.IdDificultad == 2)
+                    {
+                        PuntajeActual+=300;
+                    }
+                    else
+                    {
+                        PuntajeActual+=500;
+                    }
+                    CantCorrectas++;
+
+
             }
-        }
-        return correcto;
+        }   
+        ContadorNroPreguntaActual++;
+        PreguntaActual = ListaPreguntas[ContadorNroPreguntaActual];
+        return Respuestas;
+
+
+    }  
+    public static int ObtenerPuntaje(int PuntajeActual)
+    {
+        return PuntajeActual;
+    }
+    public static int CantidadPreguntas()
+    {
+        return ListaPreguntas.Count;
+    }
+
+    public static string RespuestaCorrecta(int idPregunta)
+    {
+        string Respuesta=null;
+        Respuesta=BD.CualEsCorrecta(idPregunta);
+        return Respuesta;
     }
 }

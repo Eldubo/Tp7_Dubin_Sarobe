@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Comenzar";
+}
+<h2 class="bien" >¡Bienvenido @ViewBag.Username!</h2> 
+<p class="catsele" >Categoría seleccionada: @ViewBag.Categoria</p>
+<p class="difisele" >Dificultad seleccionada: @ViewBag.Dificultad</p>
+
+<div class="position-absolute bottom-25 end-50">
+<form class = "Jugarr" Action='@Url.Action("Jugar", "Home")' >
+<input class="enviar" type="submit" value="Jugar" >
+</form>
+</div>
